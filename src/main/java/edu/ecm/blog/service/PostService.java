@@ -2,6 +2,9 @@ package edu.ecm.blog.service;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
+
 import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -11,6 +14,7 @@ import org.hibernate.Transaction;
 import edu.ecm.blog.domain.Post;
 
 public class PostService {
+	@Inject
 	private SessionFactory sessionFactory;
 
 	public void save(Post post) {
@@ -49,8 +53,5 @@ public class PostService {
 		return i.intValue();
 	}
 
-	public void setSessionFactory(SessionFactory sessionFactory) {
-		this.sessionFactory = sessionFactory;
 
-	}
 }
