@@ -1,10 +1,12 @@
 package edu.ecm.blog.hibernate;
 
-import java.sql.Connection;
+import java.util.List;
 
 import org.hibernate.*;
 import org.hibernate.cfg.Configuration;
+import org.hibernate.criterion.Restrictions;
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -62,4 +64,40 @@ public class HibernateTest {
 		session.close();
 	}
 
+	@Test
+	public void findAuthor() {
+	    saveAuthor();
+
+	    Session session = sessionFactory.openSession();
+
+	    Query query = session.createQuery("from Author where name = :name");
+
+	    query.setString("name", "Harpo Marx");
+
+	    List<Author> authors = query.list();
+
+	    session.close();
+
+	    Assert.assertEquals(1, authors.size());
+	    Assert.assertEquals("Harpo Marx", authors.get(0).getName());
+	}
+	
+	@Test
+	public void findAuthorCriteria() {
+	    saveAuthor();
+
+	    Session session = sessionFactory.openSession();
+
+	    Criteria criteria = session.createCriteria(Author.class);
+
+	    criteria.add(Restrictions.eq("name", "Harpo Marx"));
+
+	    List<Author> authors = criteria.list();
+
+	    session.close();
+
+	    Assert.assertEquals(1, authors.size());
+	    Assert.assertEquals("Harpo Marx", authors.get(0).getName());
+	}
+	
 }
