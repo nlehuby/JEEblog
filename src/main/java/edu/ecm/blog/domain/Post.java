@@ -2,65 +2,87 @@ package edu.ecm.blog.domain;
 
 import java.util.Date;
 
+import javax.persistence.*;
 
+@Entity
+@Table(name = "post")
 public class Post {
-	   private String title;
-	   
-	   private Date date;
-	   
-	   private String slug;
-	   
-	   private Author author;
-	   
-	   private String text;
-	   
-	   private String tags;
+	@Column
+	private String title;
 
-	   public String getTitle() {
-	      return title;
-	   }
+	@Column
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date date;
 
-	   public void setTitle(String title) {
-	      this.title = title;
-	   }
+	@Column
+	private String slug;
 
-	   public Date getDate() {
-	      return date;
-	   }
+	@ManyToOne(optional = true)
+	private Author author;
 
-	   public void setDate(Date date) {
-	      this.date = date;
-	   }
+	@Column(length = 4000)
+	private String text;
 
-	   public String getSlug() {
-	      return slug;
-	   }
+	@Column
+	private String tags;
 
-	   public void setSlug(String slug) {
-	      this.slug = slug;
-	   }
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Long id;
 
-	   public Author getAuthor() {
-	      return author;
-	   }
-
-	   public void setAuthor(Author author) {
-	      this.author = author;
-	   }
-
-	   public String getText() {
-	      return text;
-	   }
-
-	   public void setText(String text) {
-	      this.text = text;
-	   }
-
-	   public String getTags() {
-	      return tags;
-	   }
-
-	   public void setTags(String tags) {
-	      this.tags = tags;
-	   }
+	public String getTitle() {
+		return title;
 	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	public Date getDate() {
+		return date;
+	}
+
+	public void setDate(Date date) {
+		this.date = date;
+	}
+
+	public String getSlug() {
+		return slug;
+	}
+
+	public void setSlug(String slug) {
+		this.slug = slug;
+	}
+
+	public Author getAuthor() {
+		return author;
+	}
+
+	public void setAuthor(Author author) {
+		this.author = author;
+	}
+
+	public String getText() {
+		return text;
+	}
+
+	public void setText(String text) {
+		this.text = text;
+	}
+
+	public String getTags() {
+		return tags;
+	}
+
+	public void setTags(String tags) {
+		this.tags = tags;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+}
