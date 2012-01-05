@@ -1,4 +1,4 @@
-package edu.ecm.blog;
+package edu.ecm.blog.domain;
 
 public class Author {
 	   private String name;
