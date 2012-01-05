@@ -63,7 +63,6 @@ public class PostServiceTest {
 
 		Assert.assertEquals(0, session.createQuery("from Post").list().size());
 
-		session.close();
 	}
 
 	@Test
