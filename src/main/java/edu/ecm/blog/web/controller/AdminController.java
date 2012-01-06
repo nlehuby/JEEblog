@@ -64,6 +64,14 @@ public class AdminController {
 	    return "admin/post";
 	}
 	
+	@RequestMapping("/admin/post/{id}/delete")
+	public String delete(@PathVariable Long id, Model model) {
+	    // on supprime le post
+	     postService.delete(id);
+
+	    return "redirect:/admin/posts";
+	}
+	
 	
 	@InitBinder
 	public void binder(WebDataBinder binder) {
