@@ -4,9 +4,9 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import javax.inject.Inject;
+import javax.validation.Valid;
 
 
-import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -45,7 +45,7 @@ public class AdminController {
 	}
 	
 	@RequestMapping(value = "/admin/post", method = RequestMethod.POST)
-	public String post(@ModelAttribute("post") Post post, BindingResult bindingResult, Model model) {
+	public String post(@ModelAttribute("post") @Valid Post post, BindingResult bindingResult, Model model) {
 
 		   if (bindingResult.hasErrors()) {
 		       return "admin/post";
