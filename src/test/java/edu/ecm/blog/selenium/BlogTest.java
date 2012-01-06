@@ -45,6 +45,36 @@ public class BlogTest {
 
 	      Assert.assertEquals("http://localhost:8080/index", link.getAttribute("href"));
 	}
+	
+	@Test
+	public void post() {
+	   //aller sur le formulaire
+	   webDriver.navigate().to("http://localhost:8080/admin/post/");
+	   
+	   //remplir le formulaire
+	      // remplir le champs de recherche
+	      WebElement input = webDriver.findElement(By.name("date"));
+	      input.sendKeys("02/01/2011 07:22");
+	      WebElement input2 = webDriver.findElement(By.name("title"));
+	      input2.sendKeys("test selenium");
+	      WebElement input3 = webDriver.findElement(By.name("slug"));
+	      input3.sendKeys("test-selenium");
+	    //le poster
+	      input.submit();
+	      input2.submit();
+	      input3.submit();
+   
+	   //vérifier que le billet a bien été ajouté en home page
+	      // on attends le chargement de la page
+	      WebElement link = new WebDriverWait(webDriver, 5).until(new ExpectedCondition<WebElement>() {
+	         public WebElement apply(@Nullable WebDriver input) {
+	            // on doit trouver le lien vers le site
+	            return webDriver.findElement(By.partialLinkText("test selenium"));
+	         }
+	      });
+
+	      Assert.assertEquals("/billet/test-selenium", link.getAttribute("href"));
+	}
 
 
 }
