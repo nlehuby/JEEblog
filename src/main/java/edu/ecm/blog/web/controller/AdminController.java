@@ -6,12 +6,9 @@ import java.util.Date;
 import javax.inject.Inject;
 import javax.validation.Valid;
 
-
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-
-
 
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
@@ -28,55 +25,55 @@ import edu.ecm.blog.service.PostService;
 public class AdminController {
 	@Inject
 	private PostService postService;
-	
+
 	@RequestMapping("/admin/posts")
 	public String adminposts(Model model) {
 		model.addAttribute("posts", postService.find(0, postService.count()));
 
-	    return "admin/posts";
+		return "admin/posts";
 	}
-	
+
 	@RequestMapping("/admin/post")
 	public String post(Model model) {
-	    // on injecte un Post vierge dans le modèle
-	    model.addAttribute("post", new Post());
+		// on injecte un Post vierge dans le modèle
+		model.addAttribute("post", new Post());
 
-	    return "admin/post";
+		return "admin/post";
 	}
-	
+
 	@RequestMapping(value = "/admin/post", method = RequestMethod.POST)
-	public String post(@ModelAttribute("post") @Valid Post post, BindingResult bindingResult, Model model) {
+	public String post(@ModelAttribute("post") @Valid Post post,
+			BindingResult bindingResult, Model model) {
 
-		   if (bindingResult.hasErrors()) {
-		       return "admin/post";
-		   }
+		if (bindingResult.hasErrors()) {
+			return "admin/post";
+		}
 
-	    postService.save(post);
+		postService.save(post);
 
-	    return "redirect:/admin/posts";
+		return "redirect:/admin/posts";
 	}
-	
+
 	@RequestMapping("/admin/post/{id}")
 	public String post(@PathVariable Long id, Model model) {
-	    // on injecte le post
-	    model.addAttribute("post", postService.findById(id));
+		// on injecte le post
+		model.addAttribute("post", postService.findById(id));
 
-	    return "admin/post";
+		return "admin/post";
 	}
-	
+
 	@RequestMapping("/admin/post/{id}/delete")
 	public String delete(@PathVariable Long id, Model model) {
-	    // on supprime le post
-	     postService.delete(id);
+		// on supprime le post
+		postService.delete(id);
 
-	    return "redirect:/admin/posts";
+		return "redirect:/admin/posts";
 	}
-	
-	
+
 	@InitBinder
 	public void binder(WebDataBinder binder) {
-	    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 
-	    binder.registerCustomEditor(Date.class, new CustomDateEditor(sdf, true));
+		binder.registerCustomEditor(Date.class, new CustomDateEditor(sdf, true));
 	}
 }

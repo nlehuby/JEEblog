@@ -14,42 +14,44 @@ import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class GoogleTest {
-	   private WebDriver webDriver;
+	private WebDriver webDriver;
 
-	   @Before
-	   public void init() {
-	       // création du pilote firefox
-	       webDriver = new FirefoxDriver();
-	   }
-
-	   @After
-	   public void close() {
-	       // fermeture du navigateur
-	       webDriver.close();
-	   }
-	   
-	   @Test
-	   public void search() throws InterruptedException {
-	      // naviguer vers google.fr
-	      webDriver.navigate().to("http://google.fr");
-
-	      // remplir le champs de recherche
-	      WebElement input = webDriver.findElement(By.name("q"));
-
-	      input.sendKeys("selenium");
-
-	      // post du formulaire contenant l'input
-	      input.submit();
-
-	      // on attends le chargement de la page
-	      WebElement link = new WebDriverWait(webDriver, 5).until(new ExpectedCondition<WebElement>() {
-	         public WebElement apply(@Nullable WebDriver input) {
-	            // on doit trouver le lien vers le site
-	            return webDriver.findElement(By.partialLinkText("Web Browser Automation"));
-	         }
-	      });
-
-	      Assert.assertEquals("http://seleniumhq.org/", link.getAttribute("href"));
-	   }
-	   
+	@Before
+	public void init() {
+		// création du pilote firefox
+		webDriver = new FirefoxDriver();
 	}
+
+	@After
+	public void close() {
+		// fermeture du navigateur
+		webDriver.close();
+	}
+
+	@Test
+	public void search() throws InterruptedException {
+		// naviguer vers google.fr
+		webDriver.navigate().to("http://google.fr");
+
+		// remplir le champs de recherche
+		WebElement input = webDriver.findElement(By.name("q"));
+
+		input.sendKeys("selenium");
+
+		// post du formulaire contenant l'input
+		input.submit();
+
+		// on attends le chargement de la page
+		WebElement link = new WebDriverWait(webDriver, 5)
+				.until(new ExpectedCondition<WebElement>() {
+					public WebElement apply(@Nullable WebDriver input) {
+						// on doit trouver le lien vers le site
+						return webDriver.findElement(By
+								.partialLinkText("Web Browser Automation"));
+					}
+				});
+
+		Assert.assertEquals("http://seleniumhq.org/", link.getAttribute("href"));
+	}
+
+}
